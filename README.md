@@ -27,7 +27,7 @@ A simple WebSocket echo server can be found in the examples directory [here](htt
 
 The echo server in the examples directory passes all of the [Autobahn WebSocket Tests](http://autobahn.ws/): [Results](http://crunchyfrog.github.io/libevws/autobahn/)
 
-There is also small amount of unit testing is also included.
+There is a small amount of unit testing also included.
 
 ## Motivation
 
