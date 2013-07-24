@@ -1,0 +1,43 @@
+This is a C library for handling Web\-Socket connections. The library itself is pretty small and it mainly serves to glue together a number of well-\/written C libraries to provide this functionality.
+
+\subsection*{Requirements}
+
+
+\begin{DoxyItemize}
+\item \href{http://libevent.org/}{\tt libevent}
+\item \href{http://wslay.sourceforge.net/}{\tt wslay}
+\item \href{http://www.lysator.liu.se/~nisse/nettle/}{\tt nettle}
+\end{DoxyItemize}
+
+\subsection*{Install}
+
+``` ./autogen.sh ./configure make make check \# optional make install ```
+
+\subsection*{A\-P\-I}
+
+The A\-P\-I attempts to closely mirror libevent's A\-P\-I for raw sockets. Complete documentation is \href{http://crunchyfrog.github.io/libevws/doc/}{\tt here}.
+
+A simple Web\-Socket echo server can be found in the examples directory \href{https://github.com/crunchyfrog/libevws/blob/master/examples/echo_server.c}{\tt here}.
+
+\subsection*{Tests}
+
+The echo server in the examples directory passes all of the \href{http://autobahn.ws/}{\tt Autobahn Web\-Socket Tests}\-: \href{http://crunchyfrog.github.io/libevws/autobahn/}{\tt Results}
+
+There is also small amount of unit testing is also included.
+
+\subsection*{Motivation}
+
+This library is intended to be a simple lightweight Web\-Socket server library. It is also intended that it can be easily used in a server that also handles raw sockets (see example \href{https://github.com/crunchyfrog/libevws/blob/master/examples/dual_echo_server.c}{\tt here}) or does lots of other I\-O via libevent.
+
+\subsection*{Status}
+
+This is v0.\-1 of the library so, while tested and used successfully, it has not been battle-\/hardened.
+
+\subsection*{Possible T\-O\-D\-Os}
+
+
+\begin{DoxyItemize}
+\item S\-S\-L support
+\item Server initiated pings (the server does already correctly reply to all pings received)
+\item Improve efficiency by eliminating bufferevent 
+\end{DoxyItemize}

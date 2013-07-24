@@ -1,0 +1,157 @@
+\hypertarget{wslistener_8h}{\section{src/include/evws/wslistener.h File Reference}
+\label{wslistener_8h}\index{src/include/evws/wslistener.\-h@{src/include/evws/wslistener.\-h}}
+}
+{\ttfamily \#include $<$event2/listener.\-h$>$}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} )(struct evwsconnlistener $\ast$listener, struct evwsconn $\ast$conn, struct sockaddr $\ast$address, int socklen, void $\ast$user\-\_\-data)
+\item 
+typedef void($\ast$ \hyperlink{wslistener_8h_ab7e8257cc8ab648283d2f5365c0f36c4}{evwsconnlistener\-\_\-errorcb} )(struct evwsconnlistener $\ast$listener, void $\ast$user\-\_\-data)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct evwsconnlistener $\ast$ \hyperlink{wslistener_8h_a88408b767fe3ee23adeac3087f40c3e8}{evwsconnlistener\-\_\-new} (struct event\-\_\-base $\ast$base, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data, unsigned flags, int backlog, evutil\-\_\-socket\-\_\-t fd)
+\item 
+struct evwsconnlistener $\ast$ \hyperlink{wslistener_8h_a7038518ef85155e116fc1a5b9f1df4c3}{evwsconnlistener\-\_\-new\-\_\-bind} (struct event\-\_\-base $\ast$base, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data, unsigned flags, int backlog, const struct sockaddr $\ast$addr, int socklen)
+\item 
+void \hyperlink{wslistener_8h_adee96c4899f8a1d1dbc459a310558332}{evwsconnlistener\-\_\-free} (struct evwsconnlistener $\ast$levws)
+\item 
+struct evconnlistener $\ast$ \hyperlink{wslistener_8h_a43f711ea78a0246cf2d4ceb885d1b1b9}{evconnlistener\-\_\-get\-\_\-evconnlistener} (struct evwsconnlistener $\ast$levws)
+\item 
+void \hyperlink{wslistener_8h_adc2da60dcf51a76117f97c7549c07051}{evwsconnlistener\-\_\-set\-\_\-cb} (struct evwsconnlistener $\ast$levws, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data)
+\item 
+void \hyperlink{wslistener_8h_a7b36ea0d490009b1c7903b2d720abd63}{evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb} (struct evwsconnlistener $\ast$levws, \hyperlink{wslistener_8h_ab7e8257cc8ab648283d2f5365c0f36c4}{evwsconnlistener\-\_\-errorcb} errorcb)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-cb@{evwsconnlistener\-\_\-cb}}
+\index{evwsconnlistener\-\_\-cb@{evwsconnlistener\-\_\-cb}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-cb}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ evwsconnlistener\-\_\-cb)(struct evwsconnlistener $\ast$listener, struct evwsconn $\ast$conn, struct sockaddr $\ast$address, int socklen, void $\ast$user\-\_\-data)}}\label{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}
+A callback invoked when the listener has a new Web\-Socket connection and the handshake has been successfully completed.
+
+N\-O\-T\-E\-: The callback must take ownership of the evwsconn struct and deallocate it (via \hyperlink{evws_8h_ac20903ad7c62ace704b5963ede4a02ed}{evwsconn\-\_\-free()}) when done with it.
+
+
+\begin{DoxyParams}{Parameters}
+{\em listener} & The evwsconnlistener \\
+\hline
+{\em conn} & The new evwsconn struct for the new connection \\
+\hline
+{\em address} & The source address of the connection \\
+\hline
+{\em socklen} & The length of the address \\
+\hline
+{\em user\-\_\-data} & The pointer passed to evwsconnlistener\-\_\-new \\
+\hline
+\end{DoxyParams}
+\hypertarget{wslistener_8h_ab7e8257cc8ab648283d2f5365c0f36c4}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-errorcb@{evwsconnlistener\-\_\-errorcb}}
+\index{evwsconnlistener\-\_\-errorcb@{evwsconnlistener\-\_\-errorcb}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-errorcb}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ evwsconnlistener\-\_\-errorcb)(struct evwsconnlistener $\ast$listener, void $\ast$user\-\_\-data)}}\label{wslistener_8h_ab7e8257cc8ab648283d2f5365c0f36c4}
+A callback invoked when an error occurs on the listener.
+
+
+\begin{DoxyParams}{Parameters}
+{\em listener} & The evwsconnlistener \\
+\hline
+{\em user\-\_\-data} & The pointer passed to evwsconnlistener\-\_\-new \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Function Documentation}
+\hypertarget{wslistener_8h_a43f711ea78a0246cf2d4ceb885d1b1b9}{\index{wslistener.\-h@{wslistener.\-h}!evconnlistener\-\_\-get\-\_\-evconnlistener@{evconnlistener\-\_\-get\-\_\-evconnlistener}}
+\index{evconnlistener\-\_\-get\-\_\-evconnlistener@{evconnlistener\-\_\-get\-\_\-evconnlistener}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evconnlistener\-\_\-get\-\_\-evconnlistener}]{\setlength{\rightskip}{0pt plus 5cm}struct evconnlistener$\ast$ evconnlistener\-\_\-get\-\_\-evconnlistener (
+\begin{DoxyParamCaption}
+\item[{struct evwsconnlistener $\ast$}]{levws}
+\end{DoxyParamCaption}
+)}}\label{wslistener_8h_a43f711ea78a0246cf2d4ceb885d1b1b9}
+Return an evwsconnlistener's associated evconnlistener. \hypertarget{wslistener_8h_adee96c4899f8a1d1dbc459a310558332}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-free@{evwsconnlistener\-\_\-free}}
+\index{evwsconnlistener\-\_\-free@{evwsconnlistener\-\_\-free}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconnlistener\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{struct evwsconnlistener $\ast$}]{levws}
+\end{DoxyParamCaption}
+)}}\label{wslistener_8h_adee96c4899f8a1d1dbc459a310558332}
+Disable and deallocate an evwsconnlistener. \hypertarget{wslistener_8h_a88408b767fe3ee23adeac3087f40c3e8}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-new@{evwsconnlistener\-\_\-new}}
+\index{evwsconnlistener\-\_\-new@{evwsconnlistener\-\_\-new}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}struct evwsconnlistener$\ast$ evwsconnlistener\-\_\-new (
+\begin{DoxyParamCaption}
+\item[{struct event\-\_\-base $\ast$}]{base, }
+\item[{{\bf evwsconnlistener\-\_\-cb}}]{cb, }
+\item[{void $\ast$}]{user\-\_\-data, }
+\item[{unsigned}]{flags, }
+\item[{int}]{backlog, }
+\item[{evutil\-\_\-socket\-\_\-t}]{fd}
+\end{DoxyParamCaption}
+)}}\label{wslistener_8h_a88408b767fe3ee23adeac3087f40c3e8}
+Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connections a given file descriptor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em base} & The event base from libevent \\
+\hline
+{\em cb} & The connection callback as defined above \\
+\hline
+{\em user\-\_\-data} & A user-\/supplied pointer that will be passed to the callbacks \\
+\hline
+{\em flags} & Any number of L\-E\-V\-\_\-\-O\-P\-T\-\_\-$\ast$ flags from libevent \\
+\hline
+{\em backlog} & Passed to the listen() call to determine the length of the acceptable connection backlog. Set to -\/1 for reasonable default. \\
+\hline
+{\em fd} & The file descriptor to listen on. It must be a non-\/blocking file descriptor, and it should already be bound to an appropriate port and address. \\
+\hline
+\end{DoxyParams}
+\hypertarget{wslistener_8h_a7038518ef85155e116fc1a5b9f1df4c3}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-new\-\_\-bind@{evwsconnlistener\-\_\-new\-\_\-bind}}
+\index{evwsconnlistener\-\_\-new\-\_\-bind@{evwsconnlistener\-\_\-new\-\_\-bind}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-new\-\_\-bind}]{\setlength{\rightskip}{0pt plus 5cm}struct evwsconnlistener$\ast$ evwsconnlistener\-\_\-new\-\_\-bind (
+\begin{DoxyParamCaption}
+\item[{struct event\-\_\-base $\ast$}]{base, }
+\item[{{\bf evwsconnlistener\-\_\-cb}}]{cb, }
+\item[{void $\ast$}]{user\-\_\-data, }
+\item[{unsigned}]{flags, }
+\item[{int}]{backlog, }
+\item[{const struct sockaddr $\ast$}]{addr, }
+\item[{int}]{socklen}
+\end{DoxyParamCaption}
+)}}\label{wslistener_8h_a7038518ef85155e116fc1a5b9f1df4c3}
+Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connections a given file descriptor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em base} & The event base from libevent \\
+\hline
+{\em cb} & The connection callback as defined above \\
+\hline
+{\em user\-\_\-data} & A user-\/supplied pointer that will be passed to the callbacks \\
+\hline
+{\em flags} & Any number of L\-E\-V\-\_\-\-O\-P\-T\-\_\-$\ast$ flags from libevent \\
+\hline
+{\em backlog} & Passed to the listen() call to determine the length of the acceptable connection backlog. Set to -\/1 for reasonable default. \\
+\hline
+{\em addr} & The address to listen for connections on. \\
+\hline
+{\em socklen} & The length of the address. \\
+\hline
+\end{DoxyParams}
+\hypertarget{wslistener_8h_adc2da60dcf51a76117f97c7549c07051}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-set\-\_\-cb@{evwsconnlistener\-\_\-set\-\_\-cb}}
+\index{evwsconnlistener\-\_\-set\-\_\-cb@{evwsconnlistener\-\_\-set\-\_\-cb}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-set\-\_\-cb}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconnlistener\-\_\-set\-\_\-cb (
+\begin{DoxyParamCaption}
+\item[{struct evwsconnlistener $\ast$}]{levws, }
+\item[{{\bf evwsconnlistener\-\_\-cb}}]{cb, }
+\item[{void $\ast$}]{user\-\_\-data}
+\end{DoxyParamCaption}
+)}}\label{wslistener_8h_adc2da60dcf51a76117f97c7549c07051}
+Change the callback on the listener to cb and its user\-\_\-data. \hypertarget{wslistener_8h_a7b36ea0d490009b1c7903b2d720abd63}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb@{evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb}}
+\index{evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb@{evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb}!wslistener.h@{wslistener.\-h}}
+\subsubsection[{evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconnlistener\-\_\-set\-\_\-error\-\_\-cb (
+\begin{DoxyParamCaption}
+\item[{struct evwsconnlistener $\ast$}]{levws, }
+\item[{{\bf evwsconnlistener\-\_\-errorcb}}]{errorcb}
+\end{DoxyParamCaption}
+)}}\label{wslistener_8h_a7b36ea0d490009b1c7903b2d720abd63}
+Set an evwsconnlistener's error callback. 

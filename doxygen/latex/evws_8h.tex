@@ -1,0 +1,149 @@
+\hypertarget{evws_8h}{\section{src/include/evws/evws.h File Reference}
+\label{evws_8h}\index{src/include/evws/evws.\-h@{src/include/evws/evws.\-h}}
+}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{evws_8h_a65aff176bd81deecb4d6c45e6933a292}{evwsconn\-\_\-message\-\_\-cb} )(struct evwsconn $\ast$conn, enum \hyperlink{evws_8h_aaefb814b2a633e7d4275b82b1240a1e2}{evws\-\_\-data\-\_\-type}, const unsigned char $\ast$data, int len, void $\ast$user\-\_\-data)
+\item 
+typedef void($\ast$ \hyperlink{evws_8h_a3ff2812905f167acfd273b7b9767b0a5}{evwsconn\-\_\-close\-\_\-cb} )(struct evwsconn $\ast$conn, void $\ast$user\-\_\-data)
+\item 
+typedef void($\ast$ \hyperlink{evws_8h_a303aa5d176d47e8a95e0f4470a0a4c3e}{evwsconn\-\_\-error\-\_\-cb} )(struct evwsconn $\ast$conn, void $\ast$user\-\_\-data)
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{evws_8h_aaefb814b2a633e7d4275b82b1240a1e2}{evws\-\_\-data\-\_\-type} \{ {\bfseries E\-V\-W\-S\-\_\-\-D\-A\-T\-A\-\_\-\-T\-E\-X\-T} = 0, 
+{\bfseries E\-V\-W\-S\-\_\-\-D\-A\-T\-A\-\_\-\-B\-I\-N\-A\-R\-Y} = 1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{evws_8h_ad7bf7f988d11cd81493f090768224c80}{evwsconn\-\_\-set\-\_\-cbs} (struct evwsconn $\ast$conn, \hyperlink{evws_8h_a65aff176bd81deecb4d6c45e6933a292}{evwsconn\-\_\-message\-\_\-cb} message\-\_\-cb, \hyperlink{evws_8h_a3ff2812905f167acfd273b7b9767b0a5}{evwsconn\-\_\-close\-\_\-cb} close\-\_\-cb, \hyperlink{evws_8h_a303aa5d176d47e8a95e0f4470a0a4c3e}{evwsconn\-\_\-error\-\_\-cb} error\-\_\-cb, void $\ast$user\-\_\-data)
+\item 
+void \hyperlink{evws_8h_aa35e924805a31e08cfa5f68bc9dcb0ec}{evwsconn\-\_\-send\-\_\-message} (struct evwsconn $\ast$conn, enum \hyperlink{evws_8h_aaefb814b2a633e7d4275b82b1240a1e2}{evws\-\_\-data\-\_\-type} data\-\_\-type, const unsigned char $\ast$data, int len)
+\item 
+void \hyperlink{evws_8h_a62c804f46c3c62d0550edd58693f55ce}{evwsconn\-\_\-send\-\_\-close} (struct evwsconn $\ast$conn)
+\item 
+void \hyperlink{evws_8h_ac20903ad7c62ace704b5963ede4a02ed}{evwsconn\-\_\-free} (struct evwsconn $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{evws_8h_a3ff2812905f167acfd273b7b9767b0a5}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-close\-\_\-cb@{evwsconn\-\_\-close\-\_\-cb}}
+\index{evwsconn\-\_\-close\-\_\-cb@{evwsconn\-\_\-close\-\_\-cb}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-close\-\_\-cb}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ evwsconn\-\_\-close\-\_\-cb)(struct evwsconn $\ast$conn, void $\ast$user\-\_\-data)}}\label{evws_8h_a3ff2812905f167acfd273b7b9767b0a5}
+A callback invoked when the Web\-Socket connection has been closed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn} & The evwsconn that received the data \\
+\hline
+{\em user\-\_\-data} & The user-\/supplied pointer passed to evwsconn\-\_\-set\-\_\-cbs \\
+\hline
+\end{DoxyParams}
+\hypertarget{evws_8h_a303aa5d176d47e8a95e0f4470a0a4c3e}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-error\-\_\-cb@{evwsconn\-\_\-error\-\_\-cb}}
+\index{evwsconn\-\_\-error\-\_\-cb@{evwsconn\-\_\-error\-\_\-cb}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-error\-\_\-cb}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ evwsconn\-\_\-error\-\_\-cb)(struct evwsconn $\ast$conn, void $\ast$user\-\_\-data)}}\label{evws_8h_a303aa5d176d47e8a95e0f4470a0a4c3e}
+A callback invoked when an unrecoverable error has occured on the Web\-Socket connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn} & The evwsconn that received the data \\
+\hline
+{\em user\-\_\-data} & The user-\/supplied pointer passed to evwsconn\-\_\-set\-\_\-cbs \\
+\hline
+\end{DoxyParams}
+\hypertarget{evws_8h_a65aff176bd81deecb4d6c45e6933a292}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-message\-\_\-cb@{evwsconn\-\_\-message\-\_\-cb}}
+\index{evwsconn\-\_\-message\-\_\-cb@{evwsconn\-\_\-message\-\_\-cb}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-message\-\_\-cb}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ evwsconn\-\_\-message\-\_\-cb)(struct evwsconn $\ast$conn, enum {\bf evws\-\_\-data\-\_\-type}, const unsigned char $\ast$data, int len, void $\ast$user\-\_\-data)}}\label{evws_8h_a65aff176bd81deecb4d6c45e6933a292}
+A callback invoked when a new message been received on the Web\-Socket connection
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn} & The evwsconn that received the data \\
+\hline
+{\em data\-\_\-type} & The type of data received \\
+\hline
+{\em data} & The data received \\
+\hline
+{\em len} & The length of the data \\
+\hline
+{\em user\-\_\-data} & The user-\/supplied pointer passed to evwsconn\-\_\-set\-\_\-cbs \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{evws_8h_aaefb814b2a633e7d4275b82b1240a1e2}{\index{evws.\-h@{evws.\-h}!evws\-\_\-data\-\_\-type@{evws\-\_\-data\-\_\-type}}
+\index{evws\-\_\-data\-\_\-type@{evws\-\_\-data\-\_\-type}!evws.h@{evws.\-h}}
+\subsubsection[{evws\-\_\-data\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf evws\-\_\-data\-\_\-type}}}\label{evws_8h_aaefb814b2a633e7d4275b82b1240a1e2}
+Types of data in messages sent and received by a Web\-Socket connection 
+
+\subsection{Function Documentation}
+\hypertarget{evws_8h_ac20903ad7c62ace704b5963ede4a02ed}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-free@{evwsconn\-\_\-free}}
+\index{evwsconn\-\_\-free@{evwsconn\-\_\-free}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconn\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{struct evwsconn $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}}\label{evws_8h_ac20903ad7c62ace704b5963ede4a02ed}
+Disable and deallocate an evwsconn \hypertarget{evws_8h_a62c804f46c3c62d0550edd58693f55ce}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-send\-\_\-close@{evwsconn\-\_\-send\-\_\-close}}
+\index{evwsconn\-\_\-send\-\_\-close@{evwsconn\-\_\-send\-\_\-close}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-send\-\_\-close}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconn\-\_\-send\-\_\-close (
+\begin{DoxyParamCaption}
+\item[{struct evwsconn $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}}\label{evws_8h_a62c804f46c3c62d0550edd58693f55ce}
+Send a close message to client and, once sent, close the connection.
+
+N\-O\-T\-E\-: \hyperlink{evws_8h_a3ff2812905f167acfd273b7b9767b0a5}{evwsconn\-\_\-close\-\_\-cb()} will still be called when the connection is closed. Calling \hyperlink{evws_8h_ac20903ad7c62ace704b5963ede4a02ed}{evwsconn\-\_\-free()} before that callback will prevent the close message from being sent as required to cleanly close a Web\-Socket connection. \hypertarget{evws_8h_aa35e924805a31e08cfa5f68bc9dcb0ec}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-send\-\_\-message@{evwsconn\-\_\-send\-\_\-message}}
+\index{evwsconn\-\_\-send\-\_\-message@{evwsconn\-\_\-send\-\_\-message}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-send\-\_\-message}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconn\-\_\-send\-\_\-message (
+\begin{DoxyParamCaption}
+\item[{struct evwsconn $\ast$}]{conn, }
+\item[{enum {\bf evws\-\_\-data\-\_\-type}}]{data\-\_\-type, }
+\item[{const unsigned char $\ast$}]{data, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)}}\label{evws_8h_aa35e924805a31e08cfa5f68bc9dcb0ec}
+Send a new message on the Web\-Socket connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn} & The evwsconn on which to send the message \\
+\hline
+{\em data\-\_\-type} & The type of data to be sent \\
+\hline
+{\em data} & The data to send \\
+\hline
+{\em len} & The length of the data \\
+\hline
+\end{DoxyParams}
+\hypertarget{evws_8h_ad7bf7f988d11cd81493f090768224c80}{\index{evws.\-h@{evws.\-h}!evwsconn\-\_\-set\-\_\-cbs@{evwsconn\-\_\-set\-\_\-cbs}}
+\index{evwsconn\-\_\-set\-\_\-cbs@{evwsconn\-\_\-set\-\_\-cbs}!evws.h@{evws.\-h}}
+\subsubsection[{evwsconn\-\_\-set\-\_\-cbs}]{\setlength{\rightskip}{0pt plus 5cm}void evwsconn\-\_\-set\-\_\-cbs (
+\begin{DoxyParamCaption}
+\item[{struct evwsconn $\ast$}]{conn, }
+\item[{{\bf evwsconn\-\_\-message\-\_\-cb}}]{message\-\_\-cb, }
+\item[{{\bf evwsconn\-\_\-close\-\_\-cb}}]{close\-\_\-cb, }
+\item[{{\bf evwsconn\-\_\-error\-\_\-cb}}]{error\-\_\-cb, }
+\item[{void $\ast$}]{user\-\_\-data}
+\end{DoxyParamCaption}
+)}}\label{evws_8h_ad7bf7f988d11cd81493f090768224c80}
+Sets (or changes) callbacks on a Web\-Socket connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn} & The evwsconn that received the data \\
+\hline
+{\em message\-\_\-cb} & Message (new data received) callback \\
+\hline
+{\em close\-\_\-cb} & Close callback \\
+\hline
+{\em error\-\_\-cb} & Error callback \\
+\hline
+{\em user\-\_\-data} & The user-\/supplied pointer passed to evwsconn\-\_\-set\-\_\-cbs \\
+\hline
+\end{DoxyParams}

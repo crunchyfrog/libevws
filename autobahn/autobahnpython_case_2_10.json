@@ -1,0 +1,551 @@
+{
+   "agent": "AutobahnPython",
+   "behavior": "OK",
+   "behaviorClose": "OK",
+   "case": 26,
+   "closedByMe": true,
+   "createStats": true,
+   "createWirelog": true,
+   "description": "Send 10 Pings with payload.",
+   "droppedByMe": false,
+   "duration": 2,
+   "expectation": "Pongs for our Pings with all the payloads. Note: This is not required by the Spec .. but we check for this behaviour anyway. Clean close with normal code.",
+   "expected": {
+      "OK": [
+         [
+            "pong",
+            "0x7061796c6f61642d30"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d31"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d32"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d33"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d34"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d35"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d36"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d37"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d38"
+         ],
+         [
+            "pong",
+            "0x7061796c6f61642d39"
+         ]
+      ]
+   },
+   "expectedClose": {
+      "closeCode": [
+         1000
+      ],
+      "closedByMe": true,
+      "requireClean": true
+   },
+   "failedByMe": false,
+   "httpRequest": "GET / HTTP/1.1\r\nUser-Agent: AutobahnTestSuite/0.5.5-0.5.14\r\nHost: 127.0.0.1:9001\r\nUpgrade: WebSocket\r\nConnection: Upgrade\r\nPragma: no-cache\r\nCache-Control: no-cache\r\nSec-WebSocket-Key: AcCtz46wx/kqihb8117USw==\r\nSec-WebSocket-Version: 13\r\n\r\n",
+   "httpResponse": "HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: 5sj06V2q6oJRA/rXmOS6Tf9AjIc=\r\n\r\n",
+   "id": "2.10",
+   "isServer": false,
+   "localCloseCode": 1000,
+   "localCloseReason": null,
+   "received": [
+      [
+         "pong",
+         "0x7061796c6f61642d30"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d31"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d32"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d33"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d34"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d35"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d36"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d37"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d38"
+      ],
+      [
+         "pong",
+         "0x7061796c6f61642d39"
+      ]
+   ],
+   "remoteCloseCode": 1000,
+   "remoteCloseReason": null,
+   "reportTime": false,
+   "result": "Actual events match at least one expected.",
+   "resultClose": "Connection was properly closed",
+   "rxFrameStats": {
+      "8": 1,
+      "10": 10
+   },
+   "rxOctetStats": {
+      "4": 1,
+      "110": 1,
+      "129": 1
+   },
+   "started": "2013-07-23T04:37:06Z",
+   "txFrameStats": {
+      "8": 1,
+      "9": 10
+   },
+   "txOctetStats": {
+      "8": 1,
+      "15": 10,
+      "240": 1
+   },
+   "wasClean": true,
+   "wasCloseHandshakeTimeout": false,
+   "wasNotCleanReason": null,
+   "wasOpenHandshakeTimeout": false,
+   "wasServerConnectionDropTimeout": false,
+   "wirelog": [
+      [
+         "TO",
+         [
+            240,
+            "474554202f20485454502f312e310d0a557365722d4167656e743a204175746f6261686e5465737453756974652f302e352e352d302e352e31340d0a486f7374 ..."
+         ],
+         false
+      ],
+      [
+         "RO",
+         [
+            129,
+            "485454502f312e312031303120537769746368696e672050726f746f636f6c730d0a557067726164653a20776562736f636b65740d0a436f6e6e656374696f6e ..."
+         ]
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d30"
+         ],
+         9,
+         true,
+         0,
+         "c2df4b8a",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "8989c2df4b8ab2be32e6adbe2fa7f2"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d31"
+         ],
+         9,
+         true,
+         0,
+         "d45041bb",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "8989d45041bba43138d7bb312596e5"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d32"
+         ],
+         9,
+         true,
+         0,
+         "436aff03",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "8989436aff03330b866f2c0b9b2e71"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d33"
+         ],
+         9,
+         true,
+         0,
+         "fc0d62d3",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "8989fc0d62d38c6c1bbf936c06fecf"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d34"
+         ],
+         9,
+         true,
+         0,
+         "2919756f",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "89892919756f59780c03467811421d"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d35"
+         ],
+         9,
+         true,
+         0,
+         "98d48827",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "898998d48827e8b5f14bf7b5ec0aad"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d36"
+         ],
+         9,
+         true,
+         0,
+         "118bd3d4",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "8989118bd3d461eaaab87eeab7f927"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d37"
+         ],
+         9,
+         true,
+         0,
+         "e8ee2278",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "8989e8ee2278988f5b14878f4655df"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d38"
+         ],
+         9,
+         true,
+         0,
+         "7cbac72b",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "89897cbac72b0cdbbe4713dba30644"
+         ],
+         false
+      ],
+      [
+         "TF",
+         [
+            9,
+            "0x7061796c6f61642d39"
+         ],
+         9,
+         true,
+         0,
+         "58f849f9",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            15,
+            "898958f849f92899309537992dd461"
+         ],
+         false
+      ],
+      [
+         "TI",
+         3
+      ],
+      [
+         "RO",
+         [
+            110,
+            "8a097061796c6f61642d308a097061796c6f61642d318a097061796c6f61642d328a097061796c6f61642d338a097061796c6f61642d348a097061796c6f6164 ..."
+         ]
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d30"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d31"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d32"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d33"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d34"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d35"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d36"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d37"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d38"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "RF",
+         [
+            9,
+            "0x7061796c6f61642d39"
+         ],
+         10,
+         true,
+         0,
+         false,
+         null
+      ],
+      [
+         "TF",
+         [
+            2,
+            "0x03e8"
+         ],
+         8,
+         true,
+         0,
+         "0830e6c1",
+         null,
+         null,
+         false
+      ],
+      [
+         "TO",
+         [
+            8,
+            "88820830e6c10bd8"
+         ],
+         false
+      ],
+      [
+         "RO",
+         [
+            4,
+            "880203e8"
+         ]
+      ],
+      [
+         "RF",
+         [
+            2,
+            "0x03e8"
+         ],
+         8,
+         true,
+         0,
+         false,
+         null
+      ]
+   ]
+}
