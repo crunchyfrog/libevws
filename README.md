@@ -1,4 +1,4 @@
-libevws v0.1
+libevws
 =============
 
 This is a C library for handling WebSocket connections.  The library itself is pretty small and it mainly serves to glue together a number of well-written C libraries to provide this functionality.
@@ -11,17 +11,17 @@ This is a C library for handling WebSocket connections.  The library itself is p
 
 ## Install
 
-```
-./autogen.sh
-./configure
-make
-make check # optional
-make install
-```
+```  
+./autogen.sh  
+./configure  
+make  
+make check # optional  
+make install  
+```  
 
 ## API
 
-The API attempts to closely mirror libevent's API for raw sockets.  Complete documentation is [here](http://crunchyfrog.github.io/libevws/doc/).
+The API attempts to closely mirror libevent's API for raw sockets.  Complete documentation is [here](http://crunchyfrog.github.io/libevws/doxygen/html/).
 
 A simple WebSocket echo server can be found in the examples directory [here](https://github.com/crunchyfrog/libevws/blob/master/examples/echo_server.c).
 
