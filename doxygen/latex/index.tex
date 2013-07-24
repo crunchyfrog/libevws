@@ -11,11 +11,17 @@ This is a C library for handling Web\-Socket connections. The library itself is 
 
 \subsection*{Install}
 
-``` ./autogen.sh ./configure make make check \# optional make install ```
+\begin{DoxyVerb}./autogen.sh
+./configure
+make
+make check # optional
+make install
+\end{DoxyVerb}
+
 
 \subsection*{A\-P\-I}
 
-The A\-P\-I attempts to closely mirror libevent's A\-P\-I for raw sockets. Complete documentation is \href{http://crunchyfrog.github.io/libevws/doc/}{\tt here}.
+The A\-P\-I attempts to closely mirror libevent's A\-P\-I for raw sockets. Complete documentation is \href{http://crunchyfrog.github.io/libevws/doxygen/html/}{\tt here}.
 
 A simple Web\-Socket echo server can be found in the examples directory \href{https://github.com/crunchyfrog/libevws/blob/master/examples/echo_server.c}{\tt here}.
 
