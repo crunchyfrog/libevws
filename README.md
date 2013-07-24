@@ -11,13 +11,11 @@ This is a C library for handling WebSocket connections.  The library itself is p
 
 ## Install
 
-```  
-./autogen.sh  
-./configure  
-make  
-make check # optional  
-make install  
-```  
+    ./autogen.sh
+    ./configure
+    make
+    make check # optional
+    make install
 
 ## API
 
