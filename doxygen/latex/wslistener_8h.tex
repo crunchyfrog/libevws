@@ -12,9 +12,9 @@ typedef void($\ast$ \hyperlink{wslistener_8h_ab7e8257cc8ab648283d2f5365c0f36c4}{
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-struct evwsconnlistener $\ast$ \hyperlink{wslistener_8h_a88408b767fe3ee23adeac3087f40c3e8}{evwsconnlistener\-\_\-new} (struct event\-\_\-base $\ast$base, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data, unsigned flags, int backlog, evutil\-\_\-socket\-\_\-t fd)
+struct evwsconnlistener $\ast$ \hyperlink{wslistener_8h_ad5483c5508864cb3b13cb9b07d7e97d8}{evwsconnlistener\-\_\-new} (struct event\-\_\-base $\ast$base, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data, unsigned flags, int backlog, const char $\ast$subprotocols\mbox{[}$\,$\mbox{]}, evutil\-\_\-socket\-\_\-t fd)
 \item 
-struct evwsconnlistener $\ast$ \hyperlink{wslistener_8h_a7038518ef85155e116fc1a5b9f1df4c3}{evwsconnlistener\-\_\-new\-\_\-bind} (struct event\-\_\-base $\ast$base, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data, unsigned flags, int backlog, const struct sockaddr $\ast$addr, int socklen)
+struct evwsconnlistener $\ast$ \hyperlink{wslistener_8h_ac5b55d549955f8c2168a4827a86c9728}{evwsconnlistener\-\_\-new\-\_\-bind} (struct event\-\_\-base $\ast$base, \hyperlink{wslistener_8h_ad631dd71a42f892de2c4e7514c342162}{evwsconnlistener\-\_\-cb} cb, void $\ast$user\-\_\-data, unsigned flags, int backlog, const char $\ast$subprotocols\mbox{[}$\,$\mbox{]}, const struct sockaddr $\ast$addr, int socklen)
 \item 
 void \hyperlink{wslistener_8h_adee96c4899f8a1d1dbc459a310558332}{evwsconnlistener\-\_\-free} (struct evwsconnlistener $\ast$levws)
 \item 
@@ -76,7 +76,7 @@ Return an evwsconnlistener's associated evconnlistener. \hypertarget{wslistener_
 \item[{struct evwsconnlistener $\ast$}]{levws}
 \end{DoxyParamCaption}
 )}}\label{wslistener_8h_adee96c4899f8a1d1dbc459a310558332}
-Disable and deallocate an evwsconnlistener. \hypertarget{wslistener_8h_a88408b767fe3ee23adeac3087f40c3e8}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-new@{evwsconnlistener\-\_\-new}}
+Disable and deallocate an evwsconnlistener. \hypertarget{wslistener_8h_ad5483c5508864cb3b13cb9b07d7e97d8}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-new@{evwsconnlistener\-\_\-new}}
 \index{evwsconnlistener\-\_\-new@{evwsconnlistener\-\_\-new}!wslistener.h@{wslistener.\-h}}
 \subsubsection[{evwsconnlistener\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}struct evwsconnlistener$\ast$ evwsconnlistener\-\_\-new (
 \begin{DoxyParamCaption}
@@ -85,9 +85,10 @@ Disable and deallocate an evwsconnlistener. \hypertarget{wslistener_8h_a88408b76
 \item[{void $\ast$}]{user\-\_\-data, }
 \item[{unsigned}]{flags, }
 \item[{int}]{backlog, }
+\item[{const char $\ast$}]{subprotocols\mbox{[}$\,$\mbox{]}, }
 \item[{evutil\-\_\-socket\-\_\-t}]{fd}
 \end{DoxyParamCaption}
-)}}\label{wslistener_8h_a88408b767fe3ee23adeac3087f40c3e8}
+)}}\label{wslistener_8h_ad5483c5508864cb3b13cb9b07d7e97d8}
 Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connections a given file descriptor.
 
 
@@ -102,10 +103,12 @@ Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connec
 \hline
 {\em backlog} & Passed to the listen() call to determine the length of the acceptable connection backlog. Set to -\/1 for reasonable default. \\
 \hline
+{\em subprotocols} & An array of subprotocols that are supported by the server. If no subprotocols are supported, N\-U\-L\-L may be sent. \\
+\hline
 {\em fd} & The file descriptor to listen on. It must be a non-\/blocking file descriptor, and it should already be bound to an appropriate port and address. \\
 \hline
 \end{DoxyParams}
-\hypertarget{wslistener_8h_a7038518ef85155e116fc1a5b9f1df4c3}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-new\-\_\-bind@{evwsconnlistener\-\_\-new\-\_\-bind}}
+\hypertarget{wslistener_8h_ac5b55d549955f8c2168a4827a86c9728}{\index{wslistener.\-h@{wslistener.\-h}!evwsconnlistener\-\_\-new\-\_\-bind@{evwsconnlistener\-\_\-new\-\_\-bind}}
 \index{evwsconnlistener\-\_\-new\-\_\-bind@{evwsconnlistener\-\_\-new\-\_\-bind}!wslistener.h@{wslistener.\-h}}
 \subsubsection[{evwsconnlistener\-\_\-new\-\_\-bind}]{\setlength{\rightskip}{0pt plus 5cm}struct evwsconnlistener$\ast$ evwsconnlistener\-\_\-new\-\_\-bind (
 \begin{DoxyParamCaption}
@@ -114,10 +117,11 @@ Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connec
 \item[{void $\ast$}]{user\-\_\-data, }
 \item[{unsigned}]{flags, }
 \item[{int}]{backlog, }
+\item[{const char $\ast$}]{subprotocols\mbox{[}$\,$\mbox{]}, }
 \item[{const struct sockaddr $\ast$}]{addr, }
 \item[{int}]{socklen}
 \end{DoxyParamCaption}
-)}}\label{wslistener_8h_a7038518ef85155e116fc1a5b9f1df4c3}
+)}}\label{wslistener_8h_ac5b55d549955f8c2168a4827a86c9728}
 Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connections a given file descriptor.
 
 
@@ -131,6 +135,8 @@ Allocate a new evwsconnlistener object to listen for incoming Web\-Socket connec
 {\em flags} & Any number of L\-E\-V\-\_\-\-O\-P\-T\-\_\-$\ast$ flags from libevent \\
 \hline
 {\em backlog} & Passed to the listen() call to determine the length of the acceptable connection backlog. Set to -\/1 for reasonable default. \\
+\hline
+{\em subprotocols} & An array of subprotocols that are supported by the server. If no subprotocols are supported, N\-U\-L\-L may be sent. \\
 \hline
 {\em addr} & The address to listen for connections on. \\
 \hline

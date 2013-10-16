@@ -104,10 +104,10 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a88408b767fe3ee23adeac3087f40c3e8"><td class="memItemLeft" align="right" valign="top">struct evwsconnlistener *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wslistener_8h.html#a88408b767fe3ee23adeac3087f40c3e8">evwsconnlistener_new</a> (struct event_base *base, <a class="el" href="wslistener_8h.html#ad631dd71a42f892de2c4e7514c342162">evwsconnlistener_cb</a> cb, void *user_data, unsigned flags, int backlog, evutil_socket_t fd)</td></tr>
-<tr class="separator:a88408b767fe3ee23adeac3087f40c3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7038518ef85155e116fc1a5b9f1df4c3"><td class="memItemLeft" align="right" valign="top">struct evwsconnlistener *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wslistener_8h.html#a7038518ef85155e116fc1a5b9f1df4c3">evwsconnlistener_new_bind</a> (struct event_base *base, <a class="el" href="wslistener_8h.html#ad631dd71a42f892de2c4e7514c342162">evwsconnlistener_cb</a> cb, void *user_data, unsigned flags, int backlog, const struct sockaddr *addr, int socklen)</td></tr>
-<tr class="separator:a7038518ef85155e116fc1a5b9f1df4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5483c5508864cb3b13cb9b07d7e97d8"><td class="memItemLeft" align="right" valign="top">struct evwsconnlistener *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wslistener_8h.html#ad5483c5508864cb3b13cb9b07d7e97d8">evwsconnlistener_new</a> (struct event_base *base, <a class="el" href="wslistener_8h.html#ad631dd71a42f892de2c4e7514c342162">evwsconnlistener_cb</a> cb, void *user_data, unsigned flags, int backlog, const char *subprotocols[], evutil_socket_t fd)</td></tr>
+<tr class="separator:ad5483c5508864cb3b13cb9b07d7e97d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5b55d549955f8c2168a4827a86c9728"><td class="memItemLeft" align="right" valign="top">struct evwsconnlistener *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wslistener_8h.html#ac5b55d549955f8c2168a4827a86c9728">evwsconnlistener_new_bind</a> (struct event_base *base, <a class="el" href="wslistener_8h.html#ad631dd71a42f892de2c4e7514c342162">evwsconnlistener_cb</a> cb, void *user_data, unsigned flags, int backlog, const char *subprotocols[], const struct sockaddr *addr, int socklen)</td></tr>
+<tr class="separator:ac5b55d549955f8c2168a4827a86c9728"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adee96c4899f8a1d1dbc459a310558332"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wslistener_8h.html#adee96c4899f8a1d1dbc459a310558332">evwsconnlistener_free</a> (struct evwsconnlistener *levws)</td></tr>
 <tr class="separator:adee96c4899f8a1d1dbc459a310558332"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43f711ea78a0246cf2d4ceb885d1b1b9"><td class="memItemLeft" align="right" valign="top">struct evconnlistener *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wslistener_8h.html#a43f711ea78a0246cf2d4ceb885d1b1b9">evconnlistener_get_evconnlistener</a> (struct evwsconnlistener *levws)</td></tr>
@@ -197,7 +197,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a88408b767fe3ee23adeac3087f40c3e8"></a>
+<a class="anchor" id="ad5483c5508864cb3b13cb9b07d7e97d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -234,6 +234,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>subprotocols</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">evutil_socket_t&#160;</td>
           <td class="paramname"><em>fd</em>&#160;</td>
         </tr>
@@ -252,6 +258,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">user_data</td><td>A user-supplied pointer that will be passed to the callbacks </td></tr>
     <tr><td class="paramname">flags</td><td>Any number of LEV_OPT_* flags from libevent </td></tr>
     <tr><td class="paramname">backlog</td><td>Passed to the listen() call to determine the length of the acceptable connection backlog. Set to -1 for reasonable default. </td></tr>
+    <tr><td class="paramname">subprotocols</td><td>An array of subprotocols that are supported by the server. If no subprotocols are supported, NULL may be sent. </td></tr>
     <tr><td class="paramname">fd</td><td>The file descriptor to listen on. It must be a non-blocking file descriptor, and it should already be bound to an appropriate port and address. </td></tr>
   </table>
   </dd>
@@ -259,7 +266,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7038518ef85155e116fc1a5b9f1df4c3"></a>
+<a class="anchor" id="ac5b55d549955f8c2168a4827a86c9728"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -296,6 +303,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>subprotocols</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const struct sockaddr *&#160;</td>
           <td class="paramname"><em>addr</em>, </td>
         </tr>
@@ -320,6 +333,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">user_data</td><td>A user-supplied pointer that will be passed to the callbacks </td></tr>
     <tr><td class="paramname">flags</td><td>Any number of LEV_OPT_* flags from libevent </td></tr>
     <tr><td class="paramname">backlog</td><td>Passed to the listen() call to determine the length of the acceptable connection backlog. Set to -1 for reasonable default. </td></tr>
+    <tr><td class="paramname">subprotocols</td><td>An array of subprotocols that are supported by the server. If no subprotocols are supported, NULL may be sent. </td></tr>
     <tr><td class="paramname">addr</td><td>The address to listen for connections on. </td></tr>
     <tr><td class="paramname">socklen</td><td>The length of the address. </td></tr>
   </table>
@@ -391,7 +405,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 23 2013 18:21:03 for libevws by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 15 2013 18:14:57 for libevws by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

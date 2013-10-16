@@ -117,6 +117,8 @@ Functions</h2></td></tr>
 <tr class="separator:ad7bf7f988d11cd81493f090768224c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa35e924805a31e08cfa5f68bc9dcb0ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evws_8h.html#aa35e924805a31e08cfa5f68bc9dcb0ec">evwsconn_send_message</a> (struct evwsconn *conn, enum <a class="el" href="evws_8h.html#aaefb814b2a633e7d4275b82b1240a1e2">evws_data_type</a> data_type, const unsigned char *data, int len)</td></tr>
 <tr class="separator:aa35e924805a31e08cfa5f68bc9dcb0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace5173ab7bd90c471bc0b86610f2cf9a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evws_8h.html#ace5173ab7bd90c471bc0b86610f2cf9a">evwsconn_get_subprotocol</a> (struct evwsconn *conn)</td></tr>
+<tr class="separator:ace5173ab7bd90c471bc0b86610f2cf9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62c804f46c3c62d0550edd58693f55ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evws_8h.html#a62c804f46c3c62d0550edd58693f55ce">evwsconn_send_close</a> (struct evwsconn *conn)</td></tr>
 <tr class="separator:a62c804f46c3c62d0550edd58693f55ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac20903ad7c62ace704b5963ede4a02ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="evws_8h.html#ac20903ad7c62ace704b5963ede4a02ed">evwsconn_free</a> (struct evwsconn *conn)</td></tr>
@@ -215,6 +217,29 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Disable and deallocate an evwsconn </p>
+
+</div>
+</div>
+<a class="anchor" id="ace5173ab7bd90c471bc0b86610f2cf9a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* evwsconn_get_subprotocol </td>
+          <td>(</td>
+          <td class="paramtype">struct evwsconn *&#160;</td>
+          <td class="paramname"><em>conn</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the subprotocol used for this connection.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">conn</td><td>The evwsconn for which to get the subprotocol </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -342,7 +367,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 23 2013 18:21:03 for libevws by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 15 2013 18:14:57 for libevws by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
