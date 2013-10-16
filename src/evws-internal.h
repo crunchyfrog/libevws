@@ -29,6 +29,6 @@
 struct bufferevent;
 struct evwsconn;
 
-struct evwsconn* evwsconn_new(struct bufferevent* bev);
+struct evwsconn* evwsconn_new(struct bufferevent* bev, const char* subprotocol);
 
 #endif /* EVWSCONN_H_ */

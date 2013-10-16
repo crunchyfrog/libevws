@@ -96,6 +96,14 @@ void evwsconn_set_cbs(struct evwsconn *conn, evwsconn_message_cb message_cb,
 void evwsconn_send_message(struct evwsconn *conn,
     enum evws_data_type data_type, const unsigned char* data, int len);
 
+
+/**
+   Get the subprotocol used for this connection.
+
+   @param conn The evwsconn for which to get the subprotocol
+  */
+const char* evwsconn_get_subprotocol(struct evwsconn *conn);
+
 /**
    Send a close message to client and, once sent, close the connection.
 

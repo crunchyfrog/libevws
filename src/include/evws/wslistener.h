@@ -77,13 +77,15 @@ typedef void (*evwsconnlistener_errorcb)(struct evwsconnlistener *listener,
    @param flags Any number of LEV_OPT_* flags from libevent
    @param backlog Passed to the listen() call to determine the length of the
       acceptable connection backlog.  Set to -1 for reasonable default.
+   @param subprotocols An array of subprotocols that are supported by the
+      server.  If no subprotocols are supported, NULL may be sent.
    @param fd The file descriptor to listen on.  It must be a non-blocking
       file descriptor, and it should already be bound to an appropriate
       port and address.
  */
 struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
     evwsconnlistener_cb cb, void *user_data, unsigned flags, int backlog,
-    evutil_socket_t fd);
+    const char* subprotocols[], evutil_socket_t fd);
 
 /**
    Allocate a new evwsconnlistener object to listen for incoming WebSocket
@@ -96,12 +98,14 @@ struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
    @param flags Any number of LEV_OPT_* flags from libevent
    @param backlog Passed to the listen() call to determine the length of the
       acceptable connection backlog.  Set to -1 for reasonable default.
+   @param subprotocols An array of subprotocols that are supported by the
+      server.  If no subprotocols are supported, NULL may be sent.
    @param addr The address to listen for connections on.
    @param socklen The length of the address.
  */
 struct evwsconnlistener *evwsconnlistener_new_bind(struct event_base *base,
     evwsconnlistener_cb cb, void *user_data, unsigned flags, int backlog,
-    const struct sockaddr *addr, int socklen);
+    const char* subprotocols[], const struct sockaddr *addr, int socklen);
 
 /** Disable and deallocate an evwsconnlistener. */
 void evwsconnlistener_free(struct evwsconnlistener *levws);

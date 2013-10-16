@@ -38,10 +38,13 @@ enum ws_header {
   CONNECTION = 2,
   SEC_WEBSOCKET_KEY = 3,
   SEC_WEBSOCKET_VERSION = 4,
+  SEC_WEBSOCKET_PROTOCOL = 5,
 };
 
 struct http_wsparse_info {
+  const char** supported_subprotocols;
   char *accept_key;
+  const char** subprotocol;
   unsigned char found_upgrade : 1;
   unsigned char found_connection : 1;
   unsigned char found_key : 1;
@@ -63,6 +66,8 @@ static int on_header_field(http_parser* parser, const char *data, size_t len) {
     info->header = SEC_WEBSOCKET_KEY;
   } else if (STRNCASEEQL(data, "Sec-WebSocket-Version", len)) {
     info->header = SEC_WEBSOCKET_VERSION;
+  } else if (STRNCASEEQL(data, "Sec-WebSocket-Protocol", len)) {
+    info->header = SEC_WEBSOCKET_PROTOCOL;
   } else {
     info->header = NOT_RELEVANT;
   }
@@ -126,6 +131,7 @@ static int header_has_value(const char *data, size_t len,
     const char* value, size_t value_len) {
   const char* start = data;
   const char* endofdata = data + len;
+  int val = 1;
   while (start < endofdata) {
     while (start < endofdata && *start == ',') {
       start++;
@@ -138,9 +144,10 @@ static int header_has_value(const char *data, size_t len,
       end++;
     }
     if (header_is_value(start, end - start, value, value_len)) {
-      return 1;
+      return val;
     }
     start = end;
+    val++;
   }
   return 0;
 }
@@ -177,6 +184,26 @@ static int on_header_value(http_parser* parser, const char *data, size_t len) {
     }
     info->found_version = 1;
     break;
+  case SEC_WEBSOCKET_PROTOCOL: {
+    if (info->supported_subprotocols == NULL) {
+      return -1;
+    }
+    int bestPos = -1;
+    int bestIndex, i;
+    for (i = 0; info->supported_subprotocols[i]; i++) {
+      int pos = header_has_value(data, len, info->supported_subprotocols[i],
+          strlen(info->supported_subprotocols[i]));
+      if (pos != 0 && (bestPos == -1 || pos < bestPos)) {
+        bestPos = pos;
+        bestIndex = i;
+      }
+    }
+    if (bestPos == -1) {
+      return -1;
+    }
+    *info->subprotocol = info->supported_subprotocols[bestIndex];
+    break;
+  }
   default:
     break;
   }
@@ -200,12 +227,16 @@ static int on_headers_complete(http_parser* parser) {
 }
 
 int evaluate_websocket_handshake(const char* data, size_t len,
-    char accept_key[29]) {
+    const char* supported_subprotocols[], char accept_key[29],
+    const char** subprotocol) {
   http_parser parser;
   http_parser_init(&parser, HTTP_REQUEST);
   struct http_wsparse_info info;
   memset(&info, 0, sizeof(info));
+  info.supported_subprotocols = supported_subprotocols;
   info.accept_key = accept_key;
+  *subprotocol = NULL;
+  info.subprotocol = subprotocol;
   parser.data = &info;
   http_parser_settings settings;
   memset(&settings, 0, sizeof(settings));

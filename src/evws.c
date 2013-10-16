@@ -40,6 +40,7 @@ struct evwsconn {
   evwsconn_message_cb message_cb;
   evwsconn_close_cb close_cb;
   evwsconn_error_cb error_cb;
+  const char* subprotocol;
   void* user_data;
 };
 
@@ -133,7 +134,8 @@ static void on_msg_recv_callback(wslay_event_context_ptr ctx,
   }
 }
 
-struct evwsconn* evwsconn_new(struct bufferevent* bev) {
+struct evwsconn* evwsconn_new(struct bufferevent* bev,
+    const char* subprotocol) {
   struct evwsconn *conn = (struct evwsconn *)malloc(sizeof(struct evwsconn));
   memset(conn, 0, sizeof(struct evwsconn));
   conn->alive = 1;
@@ -143,7 +145,12 @@ struct evwsconn* evwsconn_new(struct bufferevent* bev) {
   struct wslay_event_callbacks callbacks = {recv_callback, send_callback,
       NULL, NULL, NULL, NULL, on_msg_recv_callback};
   wslay_event_context_server_init(&conn->ctx, &callbacks, conn);
+  conn->subprotocol = subprotocol;
   return conn;
+}
+
+const char* evwsconn_get_subprotocol(struct evwsconn *conn) {
+  return conn->subprotocol;
 }
 
 void evwsconn_free(struct evwsconn* conn) {

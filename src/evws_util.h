@@ -28,8 +28,9 @@
 
 #include <sys/types.h>
 
-// return 0 on success and set accept_key, return -1 on error
+// return 0 on success and sets accept_key and subprotocol, return -1 on error
 int evaluate_websocket_handshake(const char* data, size_t len,
-    char accept_key[29]);
+    const char* supported_subprotocols[], char accept_key[29],
+    const char** subprotocol);
 
 #endif /* EVWS_UTIL_H_ */

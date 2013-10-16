@@ -30,7 +30,9 @@
 
 struct header_test {
   const char* headers;
+  const char* supported_subprotocols[8];
   const char* accept_key;
+  const char* subprotocol;
 };
 
 struct header_test header_tests[] = {
@@ -47,7 +49,9 @@ struct header_test header_tests[] = {
     "Sec-WebSocket-Extensions: x-webkit-deflate-frame\r\n"
     "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36\r\n"
     "\r\n",
-    "QA00zyF0fJsKXlDYJwV4Fa+7HMw="
+    {NULL},
+    "QA00zyF0fJsKXlDYJwV4Fa+7HMw=",
+    NULL
     },
 
     { // Firefox 22.0
@@ -65,7 +69,9 @@ struct header_test header_tests[] = {
     "Cache-Control: no-cache\r\n"
     "Upgrade: websocket\r\n"
      "\r\n",
-     "7v/4oMg5T2mJU9lBXWItRkf6nr8="
+     {NULL},
+     "7v/4oMg5T2mJU9lBXWItRkf6nr8=",
+     NULL
     },
 
     { // Internet Explorer 10.0.9200.16635
@@ -80,7 +86,9 @@ struct header_test header_tests[] = {
     "DNT: 1\r\n"
     "Cache-Control: no-cache\r\n"
     "\r\n",
-    "UcIt6wyrPyq1VoEzXxGz2bOilUQ="
+    {NULL},
+    "UcIt6wyrPyq1VoEzXxGz2bOilUQ=",
+    NULL
     },
 
     { // Non-WebSocket request
@@ -91,7 +99,9 @@ struct header_test header_tests[] = {
     "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36\r\n"
     "Accept-Encoding: gzip,deflate,sdch\r\n"
     "Accept-Language: en-US,en;q=0.8\r\n"
-    "",
+    "\r\n",
+    {NULL},
+    NULL,
     NULL
     },
 
@@ -103,7 +113,9 @@ struct header_test header_tests[] = {
     "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
     "Sec-WebSocket-Version: 13\r\n"
     "\r\n",
-    "mUSUfTLpQTxYDKtnoIc8cQyFsiM="
+    {NULL},
+    "mUSUfTLpQTxYDKtnoIc8cQyFsiM=",
+    NULL
     },
 
     { // Wrong version
@@ -114,6 +126,8 @@ struct header_test header_tests[] = {
     "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
     "Sec-WebSocket-Version: 12\r\n"
     "\r\n",
+    {NULL},
+    NULL,
     NULL
     },
 
@@ -124,6 +138,8 @@ struct header_test header_tests[] = {
     "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
     "Sec-WebSocket-Version: 13\r\n"
     "\r\n",
+    {NULL},
+    NULL,
     NULL
     },
 
@@ -135,7 +151,9 @@ struct header_test header_tests[] = {
     "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
     "Sec-WebSocket-Version: 13\r\n"
     "\r\n",
-    "mUSUfTLpQTxYDKtnoIc8cQyFsiM="
+    {NULL},
+    "mUSUfTLpQTxYDKtnoIc8cQyFsiM=",
+    NULL
     },
 
     { // Bad key
@@ -146,32 +164,121 @@ struct header_test header_tests[] = {
     "Sec-WebSocket-Key: VM5KcH8ujx84nTSWcC8wA==\r\n"
     "Sec-WebSocket-Version: 13\r\n"
     "\r\n",
+    {NULL},
+    NULL,
     NULL
+    },
+
+    { // Supported protocol test
+    "GET / HTTP/1.1\r\n"
+    "Upgrade: websocket\r\n"
+    "Connection: upgrade\r\n"
+    "Host: localhost:9001\r\n"
+    "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
+    "Sec-WebSocket-Version: 13\r\n"
+    "Sec-WebSocket-Protocol: binary\r\n"
+    "\r\n",
+    {"binary", NULL},
+    "mUSUfTLpQTxYDKtnoIc8cQyFsiM=",
+    "binary"
+    },
+
+    { // Unsupported protocol test
+    "GET / HTTP/1.1\r\n"
+    "Upgrade: websocket\r\n"
+    "Connection: upgrade\r\n"
+    "Host: localhost:9001\r\n"
+    "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
+    "Sec-WebSocket-Version: 13\r\n"
+    "Sec-WebSocket-Protocol: binary\r\n"
+    "\r\n",
+    {NULL},
+    NULL,
+    NULL
+    },
+
+    { // Client priority protocol test
+    "GET / HTTP/1.1\r\n"
+    "Upgrade: websocket\r\n"
+    "Connection: upgrade\r\n"
+    "Host: localhost:9001\r\n"
+    "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
+    "Sec-WebSocket-Version: 13\r\n"
+    "Sec-WebSocket-Protocol: boo, foo, bar\r\n"
+    "\r\n",
+    {"bar", "baz", "foo", NULL},
+    "mUSUfTLpQTxYDKtnoIc8cQyFsiM=",
+    "foo"
+    },
+
+    { // No matches protocol test
+    "GET / HTTP/1.1\r\n"
+    "Upgrade: websocket\r\n"
+    "Connection: upgrade\r\n"
+    "Host: localhost:9001\r\n"
+    "Sec-WebSocket-Key: VM5KcH8ujx84hnTSWcC8wA==\r\n"
+    "Sec-WebSocket-Version: 13\r\n"
+    "Sec-WebSocket-Protocol: foo, bar, baz\r\n"
+    "\r\n",
+    {"bap", "bing", "bong", NULL},
+    NULL,
+    NULL
+    },
+
+    { // Real-world example
+    "GET / HTTP/1.1\r\n"
+    "Upgrade: websocket\r\n"
+    "Connection: Upgrade\r\n"
+    "Host: localhost:8080\r\n"
+    "Origin: http://localhost:8000\r\n"
+    "Sec-WebSocket-Protocol: binary\r\n"
+    "Pragma: no-cache\r\n"
+    "Cache-Control: no-cache\r\n"
+    "Sec-WebSocket-Key: tC6baIFsyFzY4EDgSGd4jw==\r\n"
+    "Sec-WebSocket-Version: 13\r\n"
+    "Sec-WebSocket-Extensions: x-webkit-deflate-frame\r\n"
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36\r\n"
+    "\r\n",
+    {"binary", NULL},
+    "ZzuswtQmHpNpPgzOYo6+kd1AHTk=",
+    "binary"
     },
 };
 
 int main(int argc, char** argv) {
   int i;
   for (i = 0; i < sizeof(header_tests)/sizeof(struct header_test); i++) {
+    struct header_test* ht = header_tests + i;
     char accept_key[29];
-    int ret = evaluate_websocket_handshake(header_tests[i].headers,
-        strlen(header_tests[i].headers), accept_key);
-    if (header_tests[i].accept_key == NULL) {
+    const char* subprotocol;
+    int ret = evaluate_websocket_handshake(ht->headers, strlen(ht->headers),
+        ht->supported_subprotocols[0] == NULL ? NULL :
+            ht->supported_subprotocols, accept_key, &subprotocol);
+    if (ht->accept_key == NULL) {
       if (ret == 0) {
         fprintf(stderr, "FAIL: header_test %d incorrectly accepted:\n %s", i,
-            header_tests[i].headers);
+            ht->headers);
         return -1;
       }
     } else {
       if (ret == -1) {
         fprintf(stderr, "FAIL: header_test %d incorrectly rejected:\n %s", i,
-            header_tests[i].headers);
+            ht->headers);
         return -1;
       }
-      if (strncmp(header_tests[i].accept_key, accept_key, 29)) {
+      if (strncmp(ht->accept_key, accept_key, 29)) {
         fprintf(stderr, "FAIL: header_test %d incorrect accept key:\n %s\n"
-            "good key: %s\nreturned key: %s\n", i, header_tests[i].headers,
-            header_tests[i].accept_key, accept_key);
+            "correct key: %s\nreturned key: %s\n", i, ht->headers,
+            ht->accept_key, accept_key);
+        return -1;
+      }
+      if ((ht->subprotocol == NULL && subprotocol != NULL) ||
+          (ht->subprotocol != NULL && (subprotocol == NULL ||
+              strcmp(ht->subprotocol, subprotocol)))) {
+        fprintf(stderr, "FAIL: header_test %d incorrect subprotocol:\n %s\n"
+            "correct subprotocol: %s\nreturned subprotocol: %s\n", i,
+            ht->headers, ht->subprotocol ?: "[NULL]",
+                subprotocol ?: "[NULL]");
         return -1;
       }
     }

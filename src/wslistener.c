@@ -50,6 +50,7 @@ struct evwsconnlistener {
   evwsconnlistener_cb cb;
   evwsconnlistener_errorcb errorcb;
   void* user_data;
+  const char** supported_subprotocols;
   struct evwspendingconn* head;
 };
 
@@ -94,7 +95,10 @@ static void pending_read(struct bufferevent *bev, void *pending_ptr) {
   unsigned char* data = evbuffer_pullup(input, len);
   char accept_key[29];
 
-  if (evaluate_websocket_handshake((char*)data, len, accept_key)) {
+  struct evwsconnlistener* levws = pending->levws;
+  const char* subprotocol = NULL;
+  if (evaluate_websocket_handshake((char*)data, len,
+      levws->supported_subprotocols, accept_key, &subprotocol)) {
     remove_pending(pending);
     free_pending(pending);
     return;
@@ -109,12 +113,17 @@ static void pending_read(struct bufferevent *bev, void *pending_ptr) {
       "HTTP/1.1 101 Switching Protocols\r\n"
       "Upgrade: websocket\r\n"
       "Connection: Upgrade\r\n"
-      "Sec-WebSocket-Accept: %s\r\n"
-      "\r\n", accept_key);
+      "Sec-WebSocket-Accept: %s\r\n", accept_key);
 
-  struct evwsconnlistener* levws = pending->levws;
+  if (subprotocol != NULL) {
+    evbuffer_add_printf(output, "Sec-WebSocket-Protocol: %s\r\n\r\n",
+        subprotocol);
+  } else {
+    evbuffer_add_printf(output, "\r\n");
+  }
+
   remove_pending(pending);
-  struct evwsconn *wsconn = evwsconn_new(pending->bev);
+  struct evwsconn *wsconn = evwsconn_new(pending->bev, subprotocol);
   pending->bev = NULL;
   levws->cb(levws, wsconn, pending->address, pending->socklen,
       levws->user_data);
@@ -161,7 +170,7 @@ static void lev_error_cb(struct evconnlistener *evlistener, void* levws_ptr) {
 
 struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
     evwsconnlistener_cb cb, void *user_data, unsigned flags, int backlog,
-    evutil_socket_t fd) {
+    const char* subprotocols[], evutil_socket_t fd) {
   struct evwsconnlistener *levws =
       (struct evwsconnlistener *)malloc(sizeof(struct evwsconnlistener));
   if (!levws)
@@ -175,6 +184,7 @@ struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
   levws->cb = cb;
   levws->errorcb = NULL;
   levws->user_data = user_data;
+  levws->supported_subprotocols = subprotocols;
   levws->head = NULL;
 
   return levws;
@@ -182,7 +192,7 @@ struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
 
 struct evwsconnlistener *evwsconnlistener_new_bind(struct event_base *base,
     evwsconnlistener_cb cb, void *user_data, unsigned flags, int backlog,
-    const struct sockaddr *addr, int socklen) {
+    const char* subprotocols[], const struct sockaddr *addr, int socklen) {
   struct evwsconnlistener *levws =
       (struct evwsconnlistener *)malloc(sizeof(struct evwsconnlistener));
   if (!levws)
@@ -197,6 +207,7 @@ struct evwsconnlistener *evwsconnlistener_new_bind(struct event_base *base,
   levws->cb = cb;
   levws->errorcb = NULL;
   levws->user_data = user_data;
+  levws->supported_subprotocols = subprotocols;
   levws->head = NULL;
 
   return levws;
