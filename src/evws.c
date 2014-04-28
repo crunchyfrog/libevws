@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <event2/event.h>
 #include <event2/bufferevent.h>
 #include <event2/buffer.h>
 #include <wslay/wslay.h>
@@ -134,6 +135,14 @@ static void on_msg_recv_callback(wslay_event_context_ptr ctx,
   }
 }
 
+static void internal_evwsconn_free(evutil_socket_t sock, short events,
+    void* conn_ptr) {
+  struct evwsconn* conn = (struct evwsconn*)conn_ptr;
+  bufferevent_free(conn->bev);
+  wslay_event_context_free(conn->ctx);
+  free(conn);
+}
+
 struct evwsconn* evwsconn_new(struct bufferevent* bev,
     const char* subprotocol) {
   struct evwsconn *conn = (struct evwsconn *)malloc(sizeof(struct evwsconn));
@@ -157,9 +166,11 @@ void evwsconn_free(struct evwsconn* conn) {
   if (conn == NULL) {
     return;
   }
-  bufferevent_free(conn->bev);
-  wslay_event_context_free(conn->ctx);
-  free(conn);
+  conn->message_cb = NULL;
+  conn->close_cb = NULL;
+  conn->error_cb = NULL;
+  event_base_once(bufferevent_get_base(conn->bev), -1, EV_TIMEOUT,
+      &internal_evwsconn_free, conn, NULL);
 }
 
 void evwsconn_set_cbs(struct evwsconn *conn, evwsconn_message_cb message_cb,
