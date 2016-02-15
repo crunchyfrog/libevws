@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
 
   struct evwsconnlistener* levws = evwsconnlistener_new_bind(
       base, new_wsconnection, NULL,
-      LEV_OPT_CLOSE_ON_FREE|LEV_OPT_REUSEABLE, -1, NULL,
+      LEV_OPT_CLOSE_ON_FREE|LEV_OPT_REUSEABLE, -1, NULL, NULL,
       (struct sockaddr*)&sin, sizeof(sin));
   if (!levws) {
     fprintf(stderr, "Error creating Web Socket listener: %s\n",

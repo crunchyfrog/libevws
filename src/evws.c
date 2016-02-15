@@ -29,8 +29,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <openssl/ssl.h>
 #include <event2/event.h>
-#include <event2/bufferevent.h>
+#include <event2/bufferevent_ssl.h>
 #include <event2/buffer.h>
 #include <wslay/wslay.h>
 
@@ -138,6 +139,22 @@ static void on_msg_recv_callback(wslay_event_context_ptr ctx,
 static void internal_evwsconn_free(evutil_socket_t sock, short events,
     void* conn_ptr) {
   struct evwsconn* conn = (struct evwsconn*)conn_ptr;
+  SSL *ctx = bufferevent_openssl_get_ssl(conn->bev);
+  if (ctx != NULL) {
+    /*
+     * SSL_RECEIVED_SHUTDOWN tells SSL_shutdown to act as if we had already
+     * received a close notify from the other end.  SSL_shutdown will then
+     * send the final close notify in reply.  The other end will receive the
+     * close notify and send theirs.  By this time, we will have already
+     * closed the socket and the other end's real close notify will never be
+     * received.  In effect, both sides will think that they have completed a
+     * clean shutdown and keep their sessions valid.  This strategy will fail
+     * if the socket is not ready for writing, in which case this hack will
+     * lead to an unclean shutdown and lost session on the other end.
+     */
+    SSL_set_shutdown(ctx, SSL_RECEIVED_SHUTDOWN);
+    SSL_shutdown(ctx);
+  }
   bufferevent_free(conn->bev);
   wslay_event_context_free(conn->ctx);
   free(conn);

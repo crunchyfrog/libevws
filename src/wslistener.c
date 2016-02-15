@@ -28,7 +28,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <event2/bufferevent.h>
+#include <openssl/err.h>
+#include <event2/bufferevent_ssl.h>
 #include <event2/buffer.h>
 
 #include "evws/evws.h"
@@ -51,6 +52,7 @@ struct evwsconnlistener {
   evwsconnlistener_errorcb errorcb;
   void* user_data;
   const char** supported_subprotocols;
+  SSL_CTX* server_ctx;
   struct evwspendingconn* head;
 };
 
@@ -136,7 +138,23 @@ static void pending_event(struct bufferevent *bev, short events,
   if (events & BEV_EVENT_EOF) {
     fprintf(stderr, "Connection closed\n");
   } else if (events & BEV_EVENT_ERROR) {
-    fprintf(stderr, "Got an error on the connection: %s\n", strerror(errno));
+    fprintf(stderr, "Connection error\n");
+    if (errno != 0) {
+      fprintf(stderr, "Got an error on the connection: %s\n", strerror(errno));
+    }
+    unsigned long ssl_error = ERR_get_error();
+    if (ssl_error != 0) {
+      fprintf(stderr, "SSL error: %s\n", ERR_error_string(ssl_error, NULL));
+    }
+    ssl_error = bufferevent_get_openssl_error(bev);
+    if (ssl_error != 0) {
+      fprintf(stderr, "Got an SSL error on the connection: %s\n",
+          ERR_error_string(ssl_error, NULL));
+    }
+  } else if (events & BEV_EVENT_CONNECTED) {
+    return; // SSL connected
+  } else {
+    fprintf(stderr, "Unknown event: %x\n", (int)events);
   }
 
   remove_pending(pending);
@@ -152,7 +170,17 @@ static void lev_cb(struct evconnlistener *evlistener,
   struct evwspendingconn *pending =
       (struct evwspendingconn *)malloc(sizeof(struct evwspendingconn));
   pending->levws = levws;
-  pending->bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+  if (levws->server_ctx == NULL) {
+    pending->bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+  } else {
+    SSL *client_ctx = SSL_new(levws->server_ctx);
+    if (client_ctx == NULL) {
+      fprintf(stderr, "Unable to get client_ctx\n");
+      exit(-1);
+    }
+    pending->bev = bufferevent_openssl_socket_new(base, fd, client_ctx,
+        BUFFEREVENT_SSL_ACCEPTING, BEV_OPT_CLOSE_ON_FREE);
+  }
   bufferevent_setcb(pending->bev, pending_read, NULL, pending_event, pending);
   bufferevent_enable(pending->bev, EV_READ);
   pending->address = (struct sockaddr *)malloc(socklen);
@@ -170,7 +198,7 @@ static void lev_error_cb(struct evconnlistener *evlistener, void* levws_ptr) {
 
 struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
     evwsconnlistener_cb cb, void *user_data, unsigned flags, int backlog,
-    const char* subprotocols[], evutil_socket_t fd) {
+    const char* subprotocols[], SSL_CTX* server_ctx, evutil_socket_t fd) {
   struct evwsconnlistener *levws =
       (struct evwsconnlistener *)malloc(sizeof(struct evwsconnlistener));
   if (!levws)
@@ -185,6 +213,7 @@ struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
   levws->errorcb = NULL;
   levws->user_data = user_data;
   levws->supported_subprotocols = subprotocols;
+  levws->server_ctx = server_ctx;
   levws->head = NULL;
 
   return levws;
@@ -192,7 +221,8 @@ struct evwsconnlistener *evwsconnlistener_new(struct event_base *base,
 
 struct evwsconnlistener *evwsconnlistener_new_bind(struct event_base *base,
     evwsconnlistener_cb cb, void *user_data, unsigned flags, int backlog,
-    const char* subprotocols[], const struct sockaddr *addr, int socklen) {
+    const char* subprotocols[], SSL_CTX* server_ctx,
+    const struct sockaddr *addr, int socklen) {
   struct evwsconnlistener *levws =
       (struct evwsconnlistener *)malloc(sizeof(struct evwsconnlistener));
   if (!levws)
@@ -208,6 +238,7 @@ struct evwsconnlistener *evwsconnlistener_new_bind(struct event_base *base,
   levws->errorcb = NULL;
   levws->user_data = user_data;
   levws->supported_subprotocols = subprotocols;
+  levws->server_ctx = server_ctx;
   levws->head = NULL;
 
   return levws;

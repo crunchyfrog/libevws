@@ -39,8 +39,19 @@ AM_INIT_AUTOMAKE
 AC_PROG_CC
 AM_PROG_CC_C_O
 
+#### Find OpenSSL
+
+AC_CHECK_LIB([crypto],[CRYPTO_new_ex_data], [], [AC_MSG_ERROR([OpenSSL libraries required])])
+AC_CHECK_LIB([ssl],[SSL_library_init], [], [AC_MSG_ERROR([OpenSSL libraries required])])
+
+AC_CHECK_HEADERS([openssl/crypto.h openssl/x509.h openssl/pem.h openssl/ssl.h openssl/err.h],[],[AC_MSG_ERROR([OpenSSL headers required])])
+
 # Checks for libraries.
 AC_SEARCH_LIBS([evconnlistener_new], [event], [], [
+  echo "Error: Unable to find libevent"
+  exit -1
+])
+AC_SEARCH_LIBS([bufferevent_openssl_socket_new], [event_openssl], [], [
   echo "Error: Unable to find libevent"
   exit -1
 ])
