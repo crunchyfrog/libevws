@@ -34,6 +34,7 @@
 extern "C" {
 #endif
 
+struct bufferevent;
 struct evwsconn;
 
 /** Types of data in messages sent and received by a WebSocket connection */
@@ -96,6 +97,12 @@ void evwsconn_set_cbs(struct evwsconn *conn, evwsconn_message_cb message_cb,
 void evwsconn_send_message(struct evwsconn *conn,
     enum evws_data_type data_type, const unsigned char* data, int len);
 
+/**
+   Get the bufferevent for this connection.
+
+   @param conn The evwsconn for which to get the bufferevent
+  */
+struct bufferevent* evwsconn_get_bufferevent(struct evwsconn *conn);
 
 /**
    Get the subprotocol used for this connection.

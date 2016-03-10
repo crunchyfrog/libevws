@@ -175,6 +175,10 @@ struct evwsconn* evwsconn_new(struct bufferevent* bev,
   return conn;
 }
 
+struct bufferevent* evwsconn_get_bufferevent(struct evwsconn *conn) {
+  return conn->bev;
+}
+
 const char* evwsconn_get_subprotocol(struct evwsconn *conn) {
   return conn->subprotocol;
 }
