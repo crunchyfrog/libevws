@@ -1,13 +1,14 @@
 libevws
 =============
 
-This is a C library for handling WebSocket connections.  The library itself is pretty small and it mainly serves to glue together a number of well-written C libraries to provide this functionality.
+This is a C library for handling WebSocket and Websocket secure connections.  The library itself is pretty small and it mainly serves to glue together a number of well-written C libraries to provide this functionality.
 
 ## Requirements
 
  * [libevent](http://libevent.org/)
- * [wslay](http://wslay.sourceforge.net/)
+ * [wslay](https://tatsuhiro-t.github.io/wslay/index.html)
  * [nettle](http://www.lysator.liu.se/~nisse/nettle/)
+ * [OpenSSL](https://www.openssl.org/)
 
 ## Install
 
@@ -39,6 +40,5 @@ This is v0.1 of the library so, while tested and used successfully, it has not b
 
 ## Possible TODOs
 
- * SSL support
  * Server initiated pings (the server does already correctly reply to all pings received)
  * Improve efficiency by eliminating bufferevent
