@@ -1,7 +1,7 @@
 libevws
 =============
 
-This is a C library for handling WebSocket and Websocket secure connections.  The library itself is pretty small and it mainly serves to glue together a number of well-written C libraries to provide this functionality.
+This is a C library for handling WebSocket and Websocket Secure connections.  The library itself is pretty small and it mainly serves to glue together a number of well-written C libraries to provide this functionality.
 
 ## Requirements
 
